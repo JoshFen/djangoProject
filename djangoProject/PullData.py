@@ -254,6 +254,7 @@ print(len(route))
 for node in route:
     print(node)
 
+
 '''for pairs in find_empty.items():
     if pairs[1] is None:
         print(pairs[0])'''
