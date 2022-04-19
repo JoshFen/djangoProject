@@ -35,10 +35,7 @@ class Graph:
             self.graph[vertex] = {}
 
     def add_edge(self, origin, end):
-        self.graph[origin][end] =  self.distance(origin, end)
-        print(self.graph[origin].keys())
-        print(self.graph[origin][end])
-        print("Edge Added")
+        self.graph[origin][end] = self.distance(origin, end)
 
 
 
@@ -52,9 +49,8 @@ class Graph:
         if self.graph[node].keys is None:
             del self.graph[node]
 
-
     def dijkstra(self, start, end):
-        parent= {}  # previous node to assist in finding shortest path
+        parent = {}  # previous node to assist in finding the shortest path
         distance = {}  # shortest path from one node to another
         path = []  # path list to store the path
         s = set()
@@ -62,33 +58,36 @@ class Graph:
 
         i1 = (90.0000, 1235.0000)
         i2 = (0.0000, 45.0000)
-        infinity = geodesic(i1, i2)
+        infinity = geodesic(i1, i2)  # Large distance value for distance calculating.
 
-        for vertex in self.graph:
-            distance[vertex] = infinity
-            parent[vertex] = None
-            queue.append(vertex)
+        for vertex in self.graph:  # Iterates for each node/vertex in the graph.
+            distance[vertex] = infinity  # Sets the distance to infinity (this case two furthest points on earth).
+            parent[vertex] = None  # Sets parent to null since unknown.
+            queue.append(vertex)  # Appends the node to the queue.
 
         i1 = (90.0000, 0.0)
         i2 = (90.0000, 0.0)
-        distance[start] = geodesic(i1, i2)
+        distance[start] = geodesic(i1, i2)  # Sets origins distance to 0.
 
-        while queue:
-            lease = None
-            cur = queue[0]
-            for node in queue:
-                if distance[node] < distance[cur]:
-                    cur = node
+        while queue:  # Iterates while the queue is not empty.
+            cur = queue[0]  # Set current node to first element in the queue.
+            for node in queue:  # Iterates for each node in the queue.
+                if distance[node] < distance[cur]:  # Finds the node with the smallest distance in the queue.
+                    cur = node  # Cur is now this node.
 
-            for neighbor, dist in self.graph[cur].items():
-                if distance[cur] + dist < distance[neighbor]:
-                    distance[neighbor] = dist + distance[cur]
-                    parent[neighbor] = cur
+            for neighbor, dist in self.graph[cur].items():  # Iterates for each connection of the current node.
+                if distance[cur] + dist < distance[neighbor]:  # Checks the for smallest distance.
+                    distance[neighbor] = dist + distance[cur]  # Sets the nodes distance to the smallest distance.
+                    parent[neighbor] = cur  # Sets currents new parent node.
 
-            queue.remove(cur)
+            queue.remove(cur)  # Removes visited node from the queue.
 
-        return(parent)
+        path.append(end)
+        while parent[end]:
+            path.append(parent[end])
+            end = parent[end]
 
+        return path
 
 
 
