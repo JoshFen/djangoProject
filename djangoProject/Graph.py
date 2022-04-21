@@ -30,30 +30,26 @@ class Graph:
                 edges.append((key, con))
         return edges
 
+    # Function to add a vertex to the graph.
     def add_vertex(self, vertex):
-        if vertex not in self.graph.keys():
-            self.graph[vertex] = {}
+        if vertex not in self.graph.keys():  # Checks if the node is already in the graph.
+            self.graph[vertex] = {}  # Creates the vertex.
 
+    # Function to add and edge between two vertices.
     def add_edge(self, origin, end):
-        self.graph[origin][end] = self.distance(origin, end)
+        self.graph[origin][end] = self.distance(origin, end)  # Create the edge.
 
-
-
+    # Function to calculate distance between two nodes.
     def distance(self, origin, end):
-        p1 = (origin.lat ,origin.lon)
-        p2 = (end.lat, end.lon)
-
-        return geodesic(p1,p2)
+        p1 = (origin.lat, origin.lon)  # Set of lat long for origin node.
+        p2 = (end.lat, end.lon)  # Set of lat long for destination node.
+        return geodesic(p1, p2)  # Return the distance between them in km.
 
     def delete_extras(self, node):
         if self.graph[node].keys is None:
             del self.graph[node]
 
     def dijkstra(self, start, end):
-        print('222222222222222222')
-        print(start)
-        print(end)
-        print('222222222222222222')
         parent = {}  # previous node to assist in finding the shortest path
         distance = {}  # shortest path from one node to another
         path = []  # path list to store the path
@@ -86,12 +82,12 @@ class Graph:
 
             queue.remove(cur)  # Removes visited node from the queue.
 
-        path.append(end)
-        while parent[end]:
-            path.append(parent[end])
-            end = parent[end]
+        path.append(end)  # Adds end node to list.
+        while parent[end]:  # Iterates until reaching origin node.
+            path.append(parent[end])  # Appends the current node's parent node.
+            end = parent[end]  # Moves to that parent node.
 
-        return path
+        return path  # Return the final path.
 
 
 

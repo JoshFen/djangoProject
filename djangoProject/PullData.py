@@ -13,8 +13,8 @@ class PullData:
 
     # Reads GeoJSon file from file path.
     def read_data(self, path):
-        read = open(r'C:\Users\Josh\Downloads\{}'.format(path))  # For PC
-        # read = open('/Users/joshuafentress/Downloads/BlueMountain2.geojson')  # For Mac
+        # read = open(r'C:\Users\Josh\Downloads\{}'.format(path))  # For PC
+        read = open('/Users/joshuafentress/Downloads/BlueMountain2.geojson')  # For Mac
         data = geojson.load(read)  # Loads file into geojson data.
         return data  # Returns data file.
 
@@ -229,6 +229,7 @@ class PullData:
     def find_route(self, start_name, end_name):
         start = None
         end = None
+
         for node in self.nodes:
             if node.name == start_name:
                 start = node.get_node_by_name(start_name)
@@ -245,10 +246,10 @@ class PullData:
         while path:
             lat = path[-1].lat
             lon = path[-1].lon
-            send_back.append((lat, lon))
+            send_back.append([lat, lon])
             path.pop(-1)
 
-        print(send_back)
+        print("here", send_back)
         return send_back
 
 

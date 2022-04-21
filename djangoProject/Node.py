@@ -10,27 +10,32 @@ class Node:
         self.difficulty = difficulty
         self.status = status
 
+    # Function to convert node to string representation.
     def __str__(self):
         return '[id: ' + str(self.node_id) + ', way id: '+ str(self.way_id) + ', name: ' + str(self.name) +  ', type: ' + str(self.node_type) + ', lat: ' + str(self.lat) + ', lon: ' + str(self.lon) + ', difficulty: ' + str(self.difficulty) + ', status: ' + str(self.status) + ']'
 
+    # Function to find a node by its name value.
     def get_node_by_name(self, name):
         if self.name == name:
             return self
         else:
             return None
 
+    # Function to find a node by its geohash id value.
     def get_node_by_node_id(self, node_id):
         if self.node_id == node_id:
             return self
         else:
             return None
 
+    # Function to retrieve node by its name and geohash id value.
     def get_by_name_cord(self, name, node_id):
         if self.name == name and self.node_id == node_id:
             return self
         else:
             return None
 
+    # Function to retrieve node's name value.
     def get_way_name(self):
         return self.name
 

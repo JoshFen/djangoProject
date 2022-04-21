@@ -24,8 +24,10 @@ def handle_request(request):
             pd = PullData()
             data = pd.read_data('BlueMountain2.geojson')
             pd.convert_data(data)
-            g = pd.find_route(array[0], array[1])
+            print("here", array[0])
+            print("yeet", array[1])
             request.session['route'] = pd.find_route(array[0], array[1])
+            print(request.session['route'])
 
             return JsonResponse({'route': request.session['route']})
         else:

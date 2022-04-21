@@ -78,10 +78,9 @@
 
         <select class="input" id="from">
             {% for node in ways %}
-                <option value="  "> {{node}} </option>
+                <option value="{{ node }}"> {{node}} </option>
             {% endfor %}
         </select>
-
         <select class="input" id="to">
             {% for node in ways %}
                 <option value="{{ node }}"> {{node}} </option>
@@ -111,16 +110,17 @@
       // show a marker on the map
       L.marker({lon: -75.516582, lat: 40.81357}).bindPopup('The center of the world').addTo(map);
 
+
       var btn = document.getElementById("submit");
       btn.addEventListener('click', route);
 
       function route(){
           var select = document.getElementById("from");
           var start = select.options[select.selectedIndex].value;
-          var select = document.getElementById("to");
-          var end = select.options[select.selectedIndex].value;
+          var select1 = document.getElementById("to");
+          var end = select1.options[select1.selectedIndex].value;
           console.log(start);
-          console.log(end)
+          console.log(end);
 
 
           $(document).ready(function () {
@@ -139,9 +139,26 @@
 
                 }
             });
-          });
+          }); // Close ajax call
 
-      }
+          $.ajax({
+              url: '/handle_request',
+              type: "GET",
+              dataType: "json",
+              success: (data) => {
+                console.log(data);
+              },
+              error: (error) => {
+                console.log(error);
+              }
+            });
+
+      var path = {{ route }}
+      console.log(path['route'][1])
+
+      } // Close route function
+
+
 
     </script>
   </body>
