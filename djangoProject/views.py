@@ -1,7 +1,8 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.shortcuts import render
 from djangoProject.PullData import PullData
+import json
 
 
 def index(request):
@@ -9,7 +10,30 @@ def index(request):
     context = dict()
     pd = PullData()  # Create Pull Data.
     data = pd.read_data('BlueMountain2.geojson')  # Pass data to read from.
-    ski_graph = pd.convert_data(data)  # Graph returned from convert_data.
+    pd.convert_data(data)  # Graph returned from convert_data
     context['ways'] = pd.way_names()
 
     return render(request, 'index.html', context)
+
+def handle_request(request):
+    if request.method == 'POST':
+        if 'data' in request.POST:
+            context = {}
+            array = request.POST['data']
+            array = json.loads(array)
+            pd = PullData()
+            data = pd.read_data('BlueMountain2.geojson')
+            pd.convert_data(data)
+            g = pd.find_route(array[0], array[1])
+            request.session['route'] = pd.find_route(array[0], array[1])
+
+            return JsonResponse({'route': request.session['route']})
+        else:
+            print(request.body)
+            array = request.POST['data']
+            array = json.loads(array)
+            print(array)
+    else:
+        return JsonResponse({'route': request.session['route']})
+
+

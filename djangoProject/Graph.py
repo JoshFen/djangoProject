@@ -50,6 +50,10 @@ class Graph:
             del self.graph[node]
 
     def dijkstra(self, start, end):
+        print('222222222222222222')
+        print(start)
+        print(end)
+        print('222222222222222222')
         parent = {}  # previous node to assist in finding the shortest path
         distance = {}  # shortest path from one node to another
         path = []  # path list to store the path

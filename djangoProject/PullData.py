@@ -13,8 +13,8 @@ class PullData:
 
     # Reads GeoJSon file from file path.
     def read_data(self, path):
-        # read = open(r'MacintoshHD\Users\Joshuafentress\Downloads\{}'.format(path))  # For PC
-        read = open('/Users/joshuafentress/Downloads/BlueMountain2.geojson')  # For Mac
+        read = open(r'C:\Users\Josh\Downloads\{}'.format(path))  # For PC
+        # read = open('/Users/joshuafentress/Downloads/BlueMountain2.geojson')  # For Mac
         data = geojson.load(read)  # Loads file into geojson data.
         return data  # Returns data file.
 
@@ -82,8 +82,8 @@ class PullData:
                         if points > 0:  # Once iteration reaches second node in list for ski run.
                             self.graph.add_edge(self.nodes[-2], node)  # Start connecting the nodes
 
-        self.bad_con()
-        return self.graph
+        self.bad_con()  # Calls bad connection function to fix the bad data.
+        return self.graph  # Return the finished graph.
 
     # Hash function for generating id's for nodes dependent on latitude and longitude points.
     def hash_cords(self, lat, lon):
@@ -239,9 +239,20 @@ class PullData:
                 end = node.get_node_by_name(end_name)
                 break
 
-        return self.graph.dijkstra(start, end)
+        path = self.graph.dijkstra(start, end)
+        send_back = []
+
+        while path:
+            lat = path[-1].lat
+            lon = path[-1].lon
+            send_back.append((lat, lon))
+            path.pop(-1)
+
+        print(send_back)
+        return send_back
 
 
+'''
 pd = PullData()  # Create Pull Data.
 d = pd.read_data('BlueMountain2.geojson') # Pass data to read from.
 
@@ -253,8 +264,6 @@ route = pd.find_route(start.name, end.name)
 print(len(route))
 for node in route:
     print(node)
-
-
-'''for pairs in find_empty.items():
+for pairs in find_empty.items():
     if pairs[1] is None:
         print(pairs[0])'''
