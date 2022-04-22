@@ -16,23 +16,23 @@ class Node:
 
     # Function to find a node by its name value.
     def get_node_by_name(self, name):
-        if self.name == name:
-            return self
-        else:
+        if self.name == name:  # Compares node's name value to passed name.
+            return self  # Returns node if a match.
+        else:  # If no match.
             return None
 
     # Function to find a node by its geohash id value.
     def get_node_by_node_id(self, node_id):
-        if self.node_id == node_id:
-            return self
-        else:
+        if self.node_id == node_id:  # Compares current node's id value to passed id.
+            return self  # Returns node if a match.
+        else:  # If no match.
             return None
 
     # Function to retrieve node by its name and geohash id value.
     def get_by_name_cord(self, name, node_id):
-        if self.name == name and self.node_id == node_id:
-            return self
-        else:
+        if self.name == name and self.node_id == node_id:  # Compares node's name and id value to passed values.
+            return self  # Returns node if a match.
+        else:  # If no match.
             return None
 
     # Function to retrieve node's name value.
