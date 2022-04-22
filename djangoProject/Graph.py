@@ -3,32 +3,33 @@ class Graph:
     def __init__(self):
       self.graph = {}
 
+    # Function to represent the graph as a string.
     def to_string(self):
-        for keys in self.graph:
+        for keys in self.graph:  # Iterates for the nodes in the graph.
             print('Node: ')
-            print(keys)
-            if len(self.graph[keys].keys()) < 1:
+            print(keys)  # Print Node.
+            if len(self.graph[keys].keys()) < 1:  # Error Check.
                 print('here')
             else:
-                for cons in self.graph[keys]:
+                for cons in self.graph[keys]:  # Iterates for connections in node.
                     print('Connections: ')
-                    print(cons)
-                print('---------------------------------------')
+                    print(cons)  # Print Connection.
+                print('---------------------------------------')  # Slice.
 
+    # Function to return a list of vertices.
     def get_vertices(self):
-        vertices = []
-        for key in  self.graph.keys():
-            vertices.append(key.node_id)
+        vertices = []  # Create the vertices list.
+        for key in  self.graph.keys():  # Iterates for the vertices in the graph.
+            vertices.append(key.node_id)  # Appends the vertex
+        return vertices  # Return the list.
 
-        return vertices
-
+    # Function to return the edge connections of the graph.
     def generate_edges(self):
-        edges = []
-        for key in self.graph:
-            s_id = key.node_id
-            for con in self.graph[key]:
-                edges.append((key, con))
-        return edges
+        edges = []  # Creates the edges list.
+        for key in self.graph:  # Iterates for the vertices in the graph.
+            for con in self.graph[key]:  # Iterates for the connections to the current vertex.
+                edges.append((key, con))  # Appends the two nodes as an edge.
+        return edges  # Returns the edge list.
 
     # Function to add a vertex to the graph.
     def add_vertex(self, vertex):
@@ -45,9 +46,10 @@ class Graph:
         p2 = (end.lat, end.lon)  # Set of lat long for destination node.
         return geodesic(p1, p2)  # Return the distance between them in km.
 
+    # Function for data error handling.
     def delete_extras(self, node):
-        if self.graph[node].keys is None:
-            del self.graph[node]
+        if self.graph[node].keys is None:  # Checks if the node has any connections.
+            del self.graph[node]  # Deletes the node if no connections.
 
     def dijkstra(self, start, end):
         parent = {}  # previous node to assist in finding the shortest path
