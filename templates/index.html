@@ -3,15 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
     <style>
       html, body {
         height: 100%;
         padding: 0;
         margin: 0;
+        background-color: cadetblue;
+        font-family: Lato, Arial;
       }
 
       #layout{
@@ -32,15 +34,18 @@
                                "go-button";
           grid-template-rows: 50px 40px 40px 1fr;
           grid-gap: 20px;
+          text-transform: uppercase;
       }
 
       #map {
         /* configure the size of the map */
         width: 100%;
         height: 100%;
-        border: cadetblue 10px;
+        border: black 10px;
         grid-area: map;
       }
+
+
 
       #route-mapper{
           text-align: center;
@@ -58,6 +63,8 @@
       .input {
           margin-left: 10px;
           margin-right: 10px;
+          text-transform: uppercase;
+          font-family: Lato, Arial;
       }
 
       #submit{
@@ -68,6 +75,7 @@
           height: 50px;
           margin-left: 25%;
       }
+
     </style>
   </head>
 
@@ -107,10 +115,6 @@
       // show the scale bar on the lower left corner
       L.control.scale({imperial: true, metric: true}).addTo(map);
 
-      // show a marker on the map
-      L.marker({lon: -75.516582, lat: 40.81357}).bindPopup('The center of the world').addTo(map);
-
-
       var btn = document.getElementById("submit");
       btn.addEventListener('click', route);
 
@@ -124,41 +128,40 @@
 
 
           $(document).ready(function () {
-          var data = [start, end]
-          var dataJ = JSON.stringify(data)
-          console.log(dataJ)
+          var points = [start, end]
+          var dataJ = JSON.stringify(points)
           $.ajax({
                 headers: {'X-CSRFTOKEN': csrftoken},
                 type: 'POST',
-                url: '/handle_request/ ',
+                url: '/handle_request/',
                 data: {data: dataJ},
+                cache: false,
                 success: function (data) {
+                    console.log("success")
                 },
                 error: function(data) {
                     console.log("here");
 
                 }
-            });
-          }); // Close ajax call
+            });// Close ajax post
 
           $.ajax({
-              url: '/handle_request',
+              url: '/handle_request/',
               type: "GET",
               dataType: "json",
+              cache: false,
               success: (data) => {
-                console.log(data);
+                console.log("here", data['route']);
+                let plots = data['route']
+                L.polyline(plots, {color: 'blue'}).addTo(map);
+
               },
               error: (error) => {
                 console.log(error);
               }
-            });
-
-      var path = {{ route }}
-      console.log(path['route'][1])
-
-      } // Close route function
-
-
+            }); // Close ajax get
+          }); // Close document function
+      } // end of route
 
     </script>
   </body>

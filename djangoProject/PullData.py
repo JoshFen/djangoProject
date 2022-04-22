@@ -13,8 +13,8 @@ class PullData:
 
     # Reads GeoJSon file from file path.
     def read_data(self, path):
-        # read = open(r'C:\Users\Josh\Downloads\{}'.format(path))  # For PC
-        read = open('/Users/joshuafentress/Downloads/BlueMountain2.geojson')  # For Mac
+        read = open(r'C:\Users\Josh\Downloads\{}'.format(path))  # For PC
+        # read = open('/Users/joshuafentress/Downloads/BlueMountain2.geojson')  # For Mac
         data = geojson.load(read)  # Loads file into geojson data.
         return data  # Returns data file.
 
@@ -249,7 +249,6 @@ class PullData:
             send_back.append([lat, lon])
             path.pop(-1)
 
-        print("here", send_back)
         return send_back
 
 
