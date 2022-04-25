@@ -18,7 +18,7 @@ def index(request):
 def handle_request(request):
     if request.method == 'POST':
         if 'data' in request.POST:
-            context = {}
+            del request.session['route']
             array = request.POST['data']
             array = json.loads(array)
             print(array)

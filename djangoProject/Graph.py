@@ -55,7 +55,6 @@ class Graph:
         parent = {}  # previous node to assist in finding the shortest path
         distance = {}  # shortest path from one node to another
         path = []  # path list to store the path
-        s = set()
         queue = []  # creating nodes variable
 
         i1 = (90.0000, 1235.0000)

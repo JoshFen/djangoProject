@@ -226,30 +226,32 @@ class PullData:
         lm_node = temp2
         self.graph.add_edge(tuts_node, lm_node)
 
+
+    # Function to find the shortest route between nodes.
     def find_route(self, start_name, end_name):
-        start = None
-        end = None
+        start = None  # Start node set to None.
+        end = None  # End node set to None.
 
-        for node in self.nodes:
-            if node.name == start_name:
-                start = node.get_node_by_name(start_name)
-                break
+        for node in self.nodes: # Iterates for the list of nodes.
+            if node.name == start_name:  # Compares the passed start name to current node's name value.
+                start = node.get_node_by_name(start_name)  # If found start is now that node.
+                break  # Exit the loop.
 
-        for node in self.nodes:
-            if node.name == end_name:
-                end = node.get_node_by_name(end_name)
-                break
+        for node in self.nodes: # Iterates for the list of nodes.
+            if node.name == end_name: # Compares the passed end name to current node's name value.
+                end = node.get_node_by_name(end_name)  # If found end is now that node.
+                break  # Exit the loop.
 
-        path = self.graph.dijkstra(start, end)
-        send_back = []
+        path = self.graph.dijkstra(start, end)  # Call the dijkstra's function with the found nodes.
+        send_back = []  #  Create list for the path to return.
 
-        while path:
-            lat = path[-1].lat
-            lon = path[-1].lon
-            send_back.append([lat, lon])
-            path.pop(-1)
+        while path:  # Iterates while the returned dictionary from dijkstra's is not null.
+            lat = path[-1].lat  # Set lat to current last node's lat value.
+            lon = path[-1].lon  # Set lon to current last node's lon value.
+            send_back.append([lat, lon])  # Add the values to the path list.
+            path.pop(-1)  # Remove the last node.
 
-        return send_back
+        return send_back  # Return the final path.
 
 
 '''
